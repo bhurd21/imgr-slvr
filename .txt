@@ -1,0 +1,122 @@
+Can Answer:
+------------------------------
+Step 1: Check for match in TeamAttribute + Angeles edge case
+# TEAMS
+# return : {"team": `teamID`} # found through db search, assume you can get id if it exists with `parse_teamID()`
+'Arizona Diamondbacks',
+'Atlanta Braves',
+'Baltimore Orioles',
+'Boston Red Sox',
+'Chicago Cubs',
+'Chicago White Sox',
+'Cincinnati Reds',
+'Cleveland Guardians',
+'Colorado Rockies',
+'Detroit Tigers',
+'Houston Astros',
+'Kansas City Royals',
+'Los Angeles Angels', # should be "Los Angeles Angels of Anaheim"
+'Los Angeles Dodgers',
+'Miami Marlins',
+'Milwaukee Brewers',
+'Minnesota Twins',
+'New York Mets',
+'New York Yankees',
+'Oakland Athletics',
+'Philadelphia Phillies',
+'Pittsburgh Pirates',
+'San Diego Padres',
+'San Francisco Giants',
+'Seattle Mariners',
+'St. Louis Cardinals',
+'Tampa Bay Rays',
+'Texas Rangers',
+'Toronto Blue Jays',,
+'Washington Nationals',
+
+Step 2: Check for Pitched / Played startswith + negro league edge case
+# POSITIONS
+# return: {"position": `positionID`} # initials of position except for first base (1B), second base(2B), third base (3B), shortstop (SS)
+'Pitched min. 1 game',
+'Played In Major Negro Lgs', # don't match, can't answer yet
+'Played Catcher min. 1 game',
+'Played Center Field min. 1 game',
+'Played First Base min. 1 game',
+'Played Left Field min. 1 game',
+'Played Outfield min. 1 game',
+'Played Right Field min. 1 game',
+'Played Second Base min. 1 game',
+'Played Shortstop min. 1 game',
+'Played Third Base min. 1 game',
+
+Step 3: Check for Batting / Pitching / Season endswith
+# STATISTIC
+# return {
+    timeframe: `Career or Season`,
+    type: `Batting or Pitching`,
+    stat: `stat_name`, # like AVG, win, RBI, Run, ect...
+    value: `int` # like .300, 10, 100, 20
+}
+'.300+ AVG Career Batting',
+'.300+ AVG Season Batting',
+'10+ HR Season Batting',
+'10+ Win Season Pitching',
+'100+ RBI Season Batting',
+'100+ Run Season Batting',
+'20+ Win Season Pitching',
+'200+ Hits Season Batting',
+'200+ K Season Pitching',
+'200+ Wins Career Pitching',
+'2000+ Hits Career Batting',
+'2000+ K Career Pitching',
+'30+ HR / 30+ SB Season Batting',
+'30+ HR Season Batting',
+'30+ SB Season', # should have type = "Pitching"
+'30+ Save Season Pitching',
+'300+ HR Career Batting',
+'300+ Save Career Pitching',
+'300+ Wins Career Pitching',
+'3000+ Hits Career Batting',
+'3000+ K Career Pitching',
+'40+ 2B Season Batting',
+'40+ HR Season Batting',
+'40+ Save Season Pitching',
+'500+ HR Career Batting',
+'≤ 3.00 ERA Career Pitching', # ignore first char here
+'≤ 3.00 ERA Season', # ignore first char here
+
+
+# AWARDS
+# return: {"award" : `award_name`}
+'All Star',
+'Rookie of the Year',
+'Silver Slugger',
+'Cy Young',
+'Gold Glove',
+'Hall of Fame',
+'MVP',
+
+# PLAYERATTRIBUTE
+# return: {"attribute": `attribute_name`}
+'Born Outside US 50 States and DC',
+'Canada',
+'Dominican Republic',
+'Puerto Rico',
+'United States'
+'World Series Champ WS Roster',
+'Only One Team',
+
+# OTHER
+# return: {"other": `other_name`}
+'40+ WAR Career',
+'6+ WAR Season',
+'First Round Draft Pick',
+'Threw a No-Hitter',
+'Designated Hitter min. 1 game',
+'Played In Major Negro Lgs',
+
+
+
+Can not answer:
+------------------------------
+

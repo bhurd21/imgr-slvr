@@ -1,0 +1,41 @@
+--
+-- Creates TeamAttribute
+--
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+CREATE DATABASE IF NOT EXISTS immaculateGrid;
+USE immaculateGrid;
+
+
+DROP TABLE IF EXISTS `TeamAttribute`;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE `TeamAttribute` (
+    `teamID` VARCHAR(4),
+    `teamName` VARCHAR(255),
+	`year` INT,
+    `WSFlag` TINYINT,
+    PRIMARY KEY (`teamID`, `year`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `TeamAttribute` (teamID, teamName, year, WSFlag)
+SELECT
+	teamID,
+	name AS teamName,
+	yearID AS year,
+	CASE WHEN WSWin = "Y" THEN 1 ELSE 0 END AS WSFlag
+FROM Teams;
+
+DROP TABLE `Teams`;

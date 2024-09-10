@@ -1,0 +1,58 @@
+--
+-- Creates BattingSeason
+--
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+CREATE DATABASE IF NOT EXISTS immaculateGrid;
+USE immaculateGrid;
+
+
+DROP TABLE IF EXISTS `BattingSeason`;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE `BattingSeason` (
+    `playerID` VARCHAR(10),
+    `teamID` VARCHAR(4),
+    `year` INT,
+    `AB` SMALLINT,
+    `R` SMALLINT,
+    `H` SMALLINT,
+    `2B` SMALLINT,
+    `3B` SMALLINT,
+    `HR` SMALLINT,
+    `RBI` SMALLINT,
+    `SB` SMALLINT,
+    `AVG` FLOAT,
+    PRIMARY KEY (`playerID`, `teamID`, `year`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `BattingSeason` (playerID, teamID, year, AB, R, H, 2B, 3B, HR, RBI, SB, AVG)
+SELECT
+	playerID,
+	teamID,
+	yearID AS year,
+	SUM(AB) AS AB,
+	SUM(R) AS R,
+	SUM(H) AS H,
+	SUM(2B) AS 2B,
+	SUM(3B) AS 3B,
+	SUM(HR) AS HR,
+	SUM(RBI) AS RBI,
+	SUM(SB) AS SB,
+	COALESCE(ROUND(SUM(H) / SUM(AB), 3), 0.000) AS `AVG`
+FROM Batting
+GROUP BY playerID, yearID, teamID;
+
+DROP TABLE `Batting`;
