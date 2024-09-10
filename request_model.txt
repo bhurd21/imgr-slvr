@@ -1,0 +1,70 @@
+Team
+name=str
+
+Award 
+value=str
+
+Position
+value=int[1 through 9]
+
+
+Statistic
+stat_type=[batting, pitching]
+timeframe=[season, career]
+gte=[true, false]
+Value=int | float
+
+Attribute
+value=[HOF, WSChamp, OnlyOneTeam, Foreign]
+
+Query Parameters
+Params = Union[Team, Award, Position, Statistic, Attribute]
+
+Request Parameters
+request_params = [Params, Params]
+
+ DDM4545433px
+
+
+Team x Team
+— query teams combination table with two where cond using name
+
+Team x Award
+— query award table with two where cond using name
+
+Team x Position
+— query fielding table with two where cond using name
+
+Team x Statistic
+— if batting and season:
+	— query batting season using two where cond using param values
+— if pitching and season:
+	— query pitching season using two where cond using param values
+— if batting and career:
+	— gb batting career, having COUNT(CASE = team 1 else 0) > 0 and sum(stat) gte value
+	— div by 0 catch for AVG
+— if pitching and career:
+	— gb pitching career, having COUNT(CASE = team 1 else 0) > 0 and sum(stat) gte value
+	— div by 0 catch for ERA
+
+Team x Attribute
+— if only one team: filter PlayerAttribute on col = team
+— else: filter, filter, intersect 
+
+Award x Position
+— filter, filter, intersect
+
+Award x Statistic
+— filter, filter, intersect
+
+Award x Attribute
+— filter, filter, intersect
+
+Position x Statistic
+— filter, filter, intersect
+
+Position x Attribute
+— filter, filter, intersect
+
+Statistic x Attribute
+— filter, filter, intersect
